@@ -32,9 +32,6 @@ A feature-rich, animated React application offering a suite of time-management a
 - **Timer**: Countdown timer with alarm.
 - **Calendar**: Interactive monthly view.
 
-## 🚀 Live Demo
-
-[Click here to view the Live Clock](https://aleenamalik12354-bot.github.io/live-clock/)
 
 ## 💻 Installation & Setup
 
