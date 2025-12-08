@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: clock-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_DETAILS=mongodb://mongo:27017
+      - SECRET_KEY=supersecretkey
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: clock-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:latest
+    container_name: clock-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

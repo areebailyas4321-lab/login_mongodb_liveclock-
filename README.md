@@ -1,62 +1,86 @@
-# Live Clock & Advanced Widgets 🕰️
+# Full-Stack Live Clock with Auto-Theme
 
-A feature-rich, animated React application offering a suite of time-management and utility widgets with a futuristic neon aesthetic.
+A secure, dockerized full-stack application featuring a Real-Time Digital Clock with automatic theme switching based on time of day, now powered by a FastAPI backend and MongoDB authentication.
 
-## 🌟 Features
+## Features
 
-### 🕰️ Advanced Analog Clock
-- **Custom Neon Design**: Cyan theme with glowing hour numbers and minute markers.
-- **Animations**:
-  - **Revolving Balls**: 6 cyan balls orbiting the clock at different speeds and directions.
-  - **Rotating Border**: Dark boundary with a rotating cyan light effect.
-  - **Floating Particles**: Subtle background particle effects.
-  - **Smooth Sweep**: Continuous motion second hand.
+*   **Secure Authentication**: JWT-based Login and Register with password hashing.
+*   **Protected Routes**: Clock access restricted to authenticated users.
+*   **Full-Stack Architecture**: React Frontend + FastAPI Backend + MongoDB.
+*   **Dockerized**: Easy deployment with `docker-compose`.
+*   **Auto-Theme**: Dynamic light/dark mode based on time of day.
+*   **Animations**: Smooth framer-motion animations for auth pages.
+*   **Widgets**: Stopwatch, Timer, Alarm, World Clock, Calendar.
 
-### ☀️ Sun & Moon Tracker
-- **Real-time Position**: Visualizes the sun and moon position based on the current time.
-- **Day/Night Cycle**: Dynamic sky gradients changing from dawn to dusk.
+## Tech Stack
 
-### 🌤️ Weather Dashboard
-- **Current Conditions**: Displays temperature, humidity, and wind speed.
-- **24-Hour Forecast**: Scrollable hourly forecast with icons.
-- **Glassmorphism UI**: Sleek, semi-transparent design.
+*   **Frontend**: React, Vite, Framer Motion, Axios.
+*   **Backend**: FastAPI, Pydantic, Motor (Async MongoDB).
+*   **Database**: MongoDB.
+*   **DevOps**: Docker, Docker Compose, Nginx.
 
-### 🎉 Celebration Effects
-- **Hourly Sparkles**: Visual delight at the top of every hour.
-- **Noon Confetti**: a burst of confetti at 12:00 PM.
-- **New Year Fireworks**: Special animation for January 1st.
+## Installation & Setup
 
-### 🛠️ Utility Widgets
-- **Digital Clock**: With multiple timezones and 12/24h toggle.
-- **Stopwatch**: With lap timing functionality.
-- **Timer**: Countdown timer with alarm.
-- **Calendar**: Interactive monthly view.
+1.  **Clone the repository**
+2.  **Run with Docker Compose** (Recommended)
 
+    ```bash
+    docker-compose up --build
+    ```
 
-## 💻 Installation & Setup
+    *   Frontend will be available at: `http://localhost:5173`
+    *   Backend API docs: `http://localhost:8000/docs`
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/areebailyas4321-lab/Online_clock
-   ```
+3.  **Manual Setup (Without Docker)**
 
-2. **Install dependencies**
-   ```bash
-   cd live-clock
-   npm install
-   ```
+    **Backend:**
+    ```bash
+    cd backend
+    python -m venv venv
+    .\venv\Scripts\activate
+    pip install -r requirements.txt
+    uvicorn main:app --reload
+    ```
 
-3. **Run the development server**
-   ```bash
-   npm run dev
-   ```
+    **Frontend:**
+    Open a new terminal:
+    ```bash
+    cd frontend
+    npm install
+    npm run dev
+    ```
 
-## 🛠️ Technologies Used
+## API Endpoints
 
-- **React.js**: Frontend framework.
-- **Vite**: Fast build tool and development server.
-- **CSS3**: Advanced animations and responsive design.
+*   `POST /auth/register`: Create a new user account.
+*   `POST /auth/login`: Authenticate and receive access token.
+*   `GET /auth/me`: Get current user profile (Protected).
 
-## 📝 License
+## Project Structure
 
-This project is open source and available under the [MIT License](LICENSE).
+```
+/
+├── backend/            # FastAPI Application
+│   ├── routers/        # API Routes
+│   ├── auth.py         # JWT & Hashing Logic
+│   ├── database.py     # MongoDB Connection
+│   ├── main.py         # App Entry Point
+│   ├── models.py       # Data Models
+│   ├── schemas.py      # Pydantic Schemas
+│   └── Dockerfile
+├── frontend/           # React Application
+│   ├── src/
+│   │   ├── components/ # React Components (Login, Clock, etc.)
+│   │   ├── contexts/   # Auth Context
+│   │   └── App.jsx     # Main App Component
+│   └── Dockerfile
+└── docker-compose.yml  # Container Orchestration
+```
+
+## Contributing
+
+1.  Fork the repository.
+2.  Create a feature branch.
+3.  Commit your changes.
+4.  Push to the branch.
+5.  Open a Pull Request.
