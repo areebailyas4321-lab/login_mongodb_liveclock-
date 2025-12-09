@@ -3,6 +3,9 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+// Get API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
@@ -18,7 +21,7 @@ export const AuthProvider = ({ children }) => {
                     const config = {
                         headers: { Authorization: `Bearer ${token}` }
                     };
-                    const response = await axios.get('http://localhost:8000/auth/me', config);
+                    const response = await axios.get(`${API_URL}/auth/me`, config);
                     setUser(response.data);
                 } catch (error) {
                     console.error("Token verification failed", error);
@@ -33,23 +36,8 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (username, password) => {
-        const params = new URLSearchParams();
-        params.append('username', username);
-        params.append('password', password); // Login usually expects form data for OAuth2 password flow, but my backend schema uses JSON body?
-        // Wait, my backend auth.py uses database query.
-        // routers/auth.py handles 'UserLogin' pydantic model which expects JSON body.
-        // So I should send JSON.
-
         try {
-            const response = await axios.post('http://localhost:8000/auth/login', { username, password });
-            // But wait, the previous code for Token (OAuth2PasswordBearer) often expects form-data.
-            // My backend router currently is:
-            // @router.post("/login", response_model=Token)
-            // async def login(user: UserLogin): ...
-            // This expects JSON body.
-            // However, OAuth2PasswordBearer in auth.py `tokenUrl="auth/login"` suggests it *might* want form data if using Swagger UI, but for my custom frontend JSON is fine as long as I send JSON.
-            // The router explicitly asks for `UserLogin` model which is JSON compatible. All good.
-
+            const response = await axios.post(`${API_URL}/auth/login`, { username, password });
             const { access_token } = response.data;
             localStorage.setItem('token', access_token);
 
@@ -57,7 +45,7 @@ export const AuthProvider = ({ children }) => {
             const config = {
                 headers: { Authorization: `Bearer ${access_token}` }
             };
-            const userResponse = await axios.get('http://localhost:8000/auth/me', config);
+            const userResponse = await axios.get(`${API_URL}/auth/me`, config);
             setUser(userResponse.data);
             return true;
         } catch (error) {
@@ -68,7 +56,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (username, password) => {
         try {
-            await axios.post('http://localhost:8000/auth/register', { username, password });
+            await axios.post(`${API_URL}/auth/register`, { username, password });
             return true;
         } catch (error) {
             console.error("Registration failed", error);
@@ -78,7 +66,7 @@ export const AuthProvider = ({ children }) => {
 
     const resetPassword = async (username, password) => {
         try {
-            await axios.post('http://localhost:8000/auth/reset-password', { username, password });
+            await axios.post(`${API_URL}/auth/reset-password`, { username, password });
             return true;
         } catch (error) {
             console.error("Password reset failed", error);
@@ -88,14 +76,14 @@ export const AuthProvider = ({ children }) => {
 
     const googleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/auth/google-demo');
+            const response = await axios.post(`${API_URL}/auth/google-demo`);
             const { access_token } = response.data;
             localStorage.setItem('token', access_token);
 
             const config = {
                 headers: { Authorization: `Bearer ${access_token}` }
             };
-            const userResponse = await axios.get('http://localhost:8000/auth/me', config);
+            const userResponse = await axios.get(`${API_URL}/auth/me`, config);
             setUser(userResponse.data);
             return true;
         } catch (error) {

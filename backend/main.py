@@ -1,19 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import auth
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI(title="Digital Clock Auth API")
 
-origins = [
-    "http://localhost:5173",  # React Dev Server
-    "http://localhost:3000",
-    "http://localhost:80",
-    "http://localhost",
-]
+# Get allowed origins from environment variable or use defaults for development
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # For docker dev simplicity, restricting in prod is better
+    allow_origins=ALLOWED_ORIGINS,  # Use environment variable for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
