@@ -4,7 +4,10 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 // Get API URL from environment variable
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// Get API URL from environment variable
+const API_URL = import.meta.env.PROD
+    ? '/api'
+    : (import.meta.env.VITE_API_URL || 'http://localhost:8000');
 
 export const useAuth = () => useContext(AuthContext);
 
