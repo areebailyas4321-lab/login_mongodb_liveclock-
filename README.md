@@ -1,5 +1,9 @@
 # 🕐 Full-Stack Live Clock with Auto-Theme ✨
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=vercel)](https://mongobd-live-clock.vercel.app)
+
+**Live Link:** [https://mongobd-live-clock.vercel.app](https://mongobd-live-clock.vercel.app)
+
 A secure, dockerized full-stack application featuring a Real-Time Digital Clock ⏰ with automatic theme switching based on time of day 🌅🌙, now powered by a FastAPI backend and MongoDB authentication.
 
 ## ✨ Features

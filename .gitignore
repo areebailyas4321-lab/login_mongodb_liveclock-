@@ -31,3 +31,7 @@ frontend/.env.production
 *.njsproj
 *.sln
 *.sw?
+.vercel
+# Python venv
+backend/venv
+venv
