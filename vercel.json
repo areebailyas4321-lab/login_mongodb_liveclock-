@@ -2,6 +2,10 @@
     "version": 2,
     "builds": [
         {
+            "src": "backend/main.py",
+            "use": "@vercel/python"
+        },
+        {
             "src": "frontend/package.json",
             "use": "@vercel/static-build",
             "config": {
@@ -11,12 +15,12 @@
     ],
     "routes": [
         {
+            "src": "/api/(.*)",
+            "dest": "/backend/main.py"
+        },
+        {
             "src": "/(.*)",
             "dest": "/frontend/$1"
         }
-    ],
-    "buildCommand": "cd frontend && npm install && npm run build",
-    "outputDirectory": "frontend/dist",
-    "framework": "vite",
-    "installCommand": "cd frontend && npm install"
+    ]
 }

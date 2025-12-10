@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = FastAPI(title="Digital Clock Auth API")
+app = FastAPI(title="Digital Clock Auth API", root_path="/api")
 
 # Get allowed origins from environment variable or use defaults for development
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
